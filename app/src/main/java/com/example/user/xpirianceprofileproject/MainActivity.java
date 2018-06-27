@@ -2,6 +2,8 @@ package com.example.user.xpirianceprofileproject;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.PrintStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ImageView ProfileImage;
@@ -27,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     TextView Followers;
     userStats UserStats;
     private static final String URL_STATS = "http://172.23.148.194/api.php";
+    private static final String URL_POSTS = "http://172.23.148.194/userposts.php";
+    List<userPosts> userpostlist;
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +47,15 @@ public class MainActivity extends AppCompatActivity {
         Questions=(TextView)findViewById(R.id.Questions);
         Answers=(TextView)findViewById(R.id.Answers);
         Followers=(TextView)findViewById(R.id.Followers);
+        recyclerView=findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+
+        userpostlist=new ArrayList<>();
+        loadUserPosts();
         loadUserdata();
     }
-    public void loadUserdata(){
+    private void loadUserdata(){
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_STATS,
                 new Response.Listener<String>() {
@@ -76,5 +91,47 @@ public class MainActivity extends AppCompatActivity {
                 });
         Volley.newRequestQueue(this).add(stringRequest);
     }
+    private void loadUserPosts(){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_POSTS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting the string to json array object
+                            JSONArray array = new JSONArray(response);
+
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+
+                                //getting product object from json array
+                                JSONObject userposts = array.getJSONObject(i);
+
+                                //adding the product to product list
+                                userpostlist.add(new userPosts(
+                                        userposts.getString("time"),
+                                        userposts.getString("date"),
+                                        userposts.getString("post")
+                                ));
+                            }
+
+                            Adapter useradapter = new Adapter(MainActivity.this, userpostlist);
+                            recyclerView.setAdapter(useradapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+
+
+
 
 }
