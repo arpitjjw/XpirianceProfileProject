@@ -1,11 +1,15 @@
 package com.example.user.xpirianceprofileproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -128,6 +132,32 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         Volley.newRequestQueue(this).add(stringRequest);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.edit) {
+
+            Intent intent = new Intent(this,edit_Activity.class);
+            this.startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.settings) {
+            Toast.makeText(this, "Android Settings Menu is Clicked", Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+
+
+        return super.onOptionsItemSelected(item);
     }
 
 
