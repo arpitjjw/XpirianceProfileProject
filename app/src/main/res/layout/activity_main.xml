@@ -15,35 +15,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:elevation="4dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ProfileImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/sample2"
+                android:padding="2dp" />
 
-        <ImageView
-            android:layout_width="180dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="180dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:id="@+id/ProfileImage"
-            android:src="@drawable/samplepicture"
-            android:padding="10dp"
 
-            />
+
         <TextView
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:hint="NameUser"
             android:gravity="center_horizontal"
-            android:padding="10dp"
+            android:padding="5dp"
             android:id="@+id/UserName"/>
         <TextView
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:hint="About"
             android:gravity="center_horizontal"
-            android:padding="10dp"
+            android:padding="5dp"
             android:id="@+id/AboutUser"/>
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
@@ -63,7 +65,7 @@
             <TextView
                 android:layout_gravity="start"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="Questions"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
@@ -71,7 +73,7 @@
             <TextView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="Answers"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
@@ -80,7 +82,7 @@
             <TextView
                 android:layout_gravity="end"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="Followers"
                 android:gravity="center_horizontal"
                 android:padding="5dp"
@@ -94,7 +96,7 @@
         <TextView
             android:layout_gravity="start"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:hint="Questions"
             android:gravity="center_horizontal"
             android:id="@+id/Questions"
@@ -103,7 +105,7 @@
         <TextView
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:hint="Answers"
             android:gravity="center_horizontal"
             android:id="@+id/Answers"
@@ -113,7 +115,7 @@
         <TextView
             android:layout_gravity="end"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:hint="Followers"
             android:gravity="center_horizontal"
             android:id="@+id/Followers"
