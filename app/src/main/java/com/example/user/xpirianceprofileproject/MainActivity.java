@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -38,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
     TextView Answers;
     TextView Followers;
     userStats UserStats;
-    private static final String URL_STATS = "http://172.23.148.194/api.php";
-    private static final String URL_POSTS = "http://172.23.148.194/userposts.php";
+    private Toolbar toolbar;
+    private static final String URL_STATS = "http://172.23.146.136/api.php";
+    private static final String URL_POSTS = "http://172.23.146.136/userposts.php";
+
     List<userPosts> userpostlist;
     RecyclerView recyclerView;
     Bitmap bitmap;
@@ -52,9 +55,12 @@ public class MainActivity extends AppCompatActivity {
         ProfileImage=(ImageView)findViewById(R.id.ProfileImage);
         About=(TextView)findViewById(R.id.AboutUser);
         UserName=(TextView)findViewById(R.id.UserName);
-        Questions=(TextView)findViewById(R.id.Questions);
-        Answers=(TextView)findViewById(R.id.Answers);
-        Followers=(TextView)findViewById(R.id.Followers);
+        Questions=(TextView)findViewById(R.id.questions);
+        Answers=(TextView)findViewById(R.id.answers);
+        Followers=(TextView)findViewById(R.id.followers);
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         recyclerView=findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         userpostlist=new ArrayList<>();
         loadUserPosts();
         loadUserdata();
-        setImage();
+        fetchImage();
     }
     private void loadUserdata(){
 
@@ -166,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setImage(){
+    public void fetchImage(){
         try {
             bitmap = BitmapFactory.decodeStream(this.openFileInput( "myImage"));
            ProfileImage.setImageBitmap(bitmap);

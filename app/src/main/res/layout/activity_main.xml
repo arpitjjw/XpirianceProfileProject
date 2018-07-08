@@ -6,41 +6,83 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical">
+    <include
+        layout="@layout/toolbarlayout"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/gradient"
             android:elevation="4dp">
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/ProfileImage"
+                android:layout_marginTop="10dp"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
+                android:background="@drawable/circle"
+
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/sample2"
-                android:padding="2dp" />
+                android:padding="4dp" />
 
 
 
         <TextView
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:hint="NameUser"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="SampleUser"
             android:gravity="center_horizontal"
             android:padding="5dp"
+            android:layout_marginTop="2dp"
+            android:textSize="32dp"
+            android:textColor="#FFFFFF"
             android:id="@+id/UserName"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Followers"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textSize="18dp"/>
+            <android.support.v4.widget.Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:fontFamily="sans-serif"
+                android:textSize="18dp"
+                android:id="@+id/followers"
+                />
+        </LinearLayout>
         <TextView
             android:layout_gravity="center"
+            android:textSize="14dp"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:hint="About"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="8dp"
+            android:text="SampleAbout SampleAbout SampleAbout SampleAbout SampleAbout SampleAbout"
+            android:fontFamily="sans-serif"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:id="@+id/AboutUser"/>
@@ -49,80 +91,93 @@
     </android.support.v7.widget.CardView>
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
-        android:layout_height="5dp" />
+        android:layout_height="3dp" />
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:elevation="4dp"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView
-                android:layout_gravity="start"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Questions"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                android:layout_weight="1"/>
-            <TextView
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Answers"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
                 android:layout_weight="1"
-                />
-            <TextView
-                android:layout_gravity="end"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Followers"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                android:layout_weight="1"/>
+                android:background="#80e9d4"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-        </LinearLayout>
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_gravity="start"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:hint="Questions"
-            android:gravity="center_horizontal"
-            android:id="@+id/Questions"
-            android:padding="3dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:hint="Answers"
-            android:gravity="center_horizontal"
-            android:id="@+id/Answers"
-            android:padding="3dp"
-            android:layout_weight="1"
-            />
-        <TextView
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:hint="Followers"
-            android:gravity="center_horizontal"
-            android:id="@+id/Followers"
-            android:padding="3dp"
-            android:layout_weight="1"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="100"
+                        android:textColor="@color/name"
+                        android:textSize="25sp"
+                        android:id="@+id/questions"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Questions"
+                        android:textAllCaps="true"
+                        android:textColor="@color/name"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#36b5a6"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="100"
+                        android:textColor="@color/name"
+                        android:textSize="25sp"
+                        android:id="@+id/answers"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Answers"
+                        android:textAllCaps="true"
+                        android:textColor="@color/name"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.RecyclerView

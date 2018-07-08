@@ -4,11 +4,13 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,9 +40,11 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
     Button ChangePic;
     Button Uploadpic;
     private Bitmap bitmap;
+    String imageBase64;
 
-    private static final String URL_EDIT_NAME = "http://172.23.148.194/editname.php";
-    private static final String URL_EDIT_ABOUT = "http://172.23.148.194/editabout.php";
+    private static final String URL_EDIT_NAME = "http://172.23.146.136/editname.php";
+    private static final String URL_EDIT_ABOUT = "http://172.23.146.136/editabout.php";
+    private static final String URL_PROFILE_PIC = "http://172.23.146.136/profilepic.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
         Uploadpic.setOnClickListener(this);
         android.support.v7.app.ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Edit Profile");
+
         nameedit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 editProfilename();
@@ -155,12 +161,43 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
         };
         Volley.newRequestQueue(this).add(postRequest);
     }
+    private void uploadPic(){
+        StringRequest postRequest = new StringRequest(Request.Method.POST, URL_PROFILE_PIC,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+
+                params.put("image", imageBase64);
+
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
+    }
     @Override
     public void onClick(View v){
         switch (v.getId()){
             case R.id.Uploadpic:
 
-
+                    uploadPic();
 
                 break;
 
@@ -187,10 +224,12 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
     public String createImageFromBitmap(Bitmap bitmap) {
         String fileName = "myImage";
         try {
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            ByteArrayOutputStream bytesA = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytesA);
+            byte [] imgbytes =bytesA.toByteArray();
+            imageBase64= Base64.encodeToString(imgbytes,Base64.DEFAULT);
             FileOutputStream fo = openFileOutput(fileName, Context.MODE_PRIVATE);
-            fo.write(bytes.toByteArray());
+            fo.write(bytesA.toByteArray());
             fo.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,4 +237,5 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
         }
         return fileName;
     }
+
 }
