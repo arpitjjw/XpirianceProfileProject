@@ -1,6 +1,7 @@
 package com.example.user.xpirianceprofileproject;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -41,10 +43,11 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
     Button Uploadpic;
     private Bitmap bitmap;
     String imageBase64;
+    private ProgressDialog pd;
 
-    private static final String URL_EDIT_NAME = "http://172.23.146.136/editname.php";
-    private static final String URL_EDIT_ABOUT = "http://172.23.146.136/editabout.php";
-    private static final String URL_PROFILE_PIC = "http://172.23.146.136/profilepic.php";
+    private static final String URL_EDIT_NAME = "http://192.168.43.174/editname.php";
+    private static final String URL_EDIT_ABOUT = "http://192.168.43.174/editabout.php";
+    private static final String URL_PROFILE_PIC = "http://192.168.43.174/profilepic.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
         editname=(EditText)findViewById(R.id.EditUsername);
 
         editabout=(EditText)findViewById(R.id.EditAbout);
+        pd = new ProgressDialog(this);
         nameedit=(Button)findViewById(R.id.SaveName);
         aboutedit=(Button)findViewById(R.id.SaveAbout);
         ChangePic=(Button)findViewById(R.id.ProfilePic);
@@ -92,7 +96,7 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this,profilePage.class);
                 this.startActivity(intent);
                 return true;
             default:
@@ -162,11 +166,15 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
         Volley.newRequestQueue(this).add(postRequest);
     }
     private void uploadPic(){
+        pd.setMessage("Saving Image");
+        pd.show();
         StringRequest postRequest = new StringRequest(Request.Method.POST, URL_PROFILE_PIC,
                 new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response) {
+                        pd.setMessage("Saved Successfully");
+                        pd.hide();
                         // response
                         Log.d("Response", response);
                     }
@@ -175,6 +183,8 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        pd.setMessage("Error");
+                        pd.hide();
                         // error
                         Log.d("Error.Response", error.toString());
                     }
