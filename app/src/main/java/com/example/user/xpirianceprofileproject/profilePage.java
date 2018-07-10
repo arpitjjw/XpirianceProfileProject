@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,13 +37,19 @@ public class profilePage extends AppCompatActivity {
     TextView Answers;
     TextView Followers;
     userStats UserStats;
+    Adapter useradapter;
+    Adapteranswers useransweradapter;
+
 
     private Toolbar toolbar;
     private static final String URL_STATS = "http://192.168.43.174/api.php";
-    private static final String URL_POSTS = "http://192.168.43.174/userposts.php";
+    private static final String URL_POSTS = "http://192.168.43.174/userquestions.php";
+    private static final String URL_ANSWERS = "http://192.168.43.174/userquestionanswers.php";
 
     List<userPosts> userpostlist;
+    List<useranswers> useranswersList;
     RecyclerView recyclerView;
+    RecyclerView recyclerViewanswers;
     Bitmap bitmap;
 
     @Override
@@ -50,24 +57,52 @@ public class profilePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
         ProfileImage=(ImageView)findViewById(R.id.ProfileImage);
+
         About=(TextView)findViewById(R.id.AboutUser);
 
         UserName=(TextView)findViewById(R.id.UserName);
         Questions=(TextView)findViewById(R.id.questions);
+
         Answers=(TextView)findViewById(R.id.answers);
         Followers=(TextView)findViewById(R.id.followers);
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         recyclerView=findViewById(R.id.recyclerview);
+        recyclerViewanswers=findViewById(R.id.recycleranswers);
+        recyclerViewanswers.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewanswers.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         recyclerView.setHasFixedSize(true);
 
+        recyclerView.setNestedScrollingEnabled(false);
         userpostlist=new ArrayList<>();
-        loadUserPosts();
+        useranswersList=new ArrayList<>();
         loadUserdata();
+        loadUserPosts();
+        loadUserAnswers();
+
+
         fetchImage();
+        Answers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.setVisibility(View.GONE);
+                recyclerViewanswers.setVisibility(View.VISIBLE);
+
+            }
+        });
+        Questions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerViewanswers.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+
+
+            }
+        });
 
     }
     private void loadUserdata(){
@@ -84,6 +119,7 @@ public class profilePage extends AppCompatActivity {
                                 JSONObject userstats = array.getJSONObject(i);
                                 UserStats=new userStats(userstats.getString("imageurl"),userstats.getString("name"),userstats.getString("about"),userstats.getInt("questions"),userstats.getInt("answers"),userstats.getInt("followers"));
                             }
+
 
                             About.setText(String.valueOf(UserStats.getAbout()));
                             UserName.setText(String.valueOf(UserStats.getUserName()));
@@ -122,13 +158,11 @@ public class profilePage extends AppCompatActivity {
 
                                 //adding the product to product list
                                 userpostlist.add(new userPosts(
-                                        userposts.getString("time"),
-                                        userposts.getString("date"),
-                                        userposts.getString("post")
+                                        userposts.getString("questions")
                                 ));
                             }
 
-                            Adapter useradapter = new Adapter(profilePage.this, userpostlist);
+                            useradapter = new Adapter(profilePage.this, userpostlist);
                             recyclerView.setAdapter(useradapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -142,6 +176,43 @@ public class profilePage extends AppCompatActivity {
                     }
                 });
         Volley.newRequestQueue(this).add(stringRequest);
+    }
+    public void loadUserAnswers(){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_ANSWERS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            //converting the string to json array object
+                            JSONArray array = new JSONArray(response);
+
+                            //traversing through all the object
+                            for (int i = 0; i < array.length(); i++) {
+
+                                //getting product object from json array
+                                JSONObject userposts = array.getJSONObject(i);
+
+                                //adding the product to product list
+                                useranswersList.add(new useranswers(
+                                        userposts.getString("questions"),userposts.getString("answers")
+                                ));
+                            }
+
+                            useransweradapter = new Adapteranswers(profilePage.this, useranswersList);
+                            recyclerViewanswers.setAdapter(useransweradapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        Volley.newRequestQueue(this).add(stringRequest);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

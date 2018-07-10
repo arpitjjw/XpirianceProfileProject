@@ -175,6 +175,7 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(String response) {
                         pd.setMessage("Saved Successfully");
                         pd.hide();
+                        pd.dismiss();
                         // response
                         Log.d("Response", response);
                     }
@@ -185,6 +186,7 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
                     public void onErrorResponse(VolleyError error) {
                         pd.setMessage("Error");
                         pd.hide();
+                        pd.dismiss();
                         // error
                         Log.d("Error.Response", error.toString());
                     }
@@ -246,6 +248,12 @@ public class edit_Activity extends AppCompatActivity implements View.OnClickList
             fileName = null;
         }
         return fileName;
+    }
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this,profilePage.class);
+        this.startActivity(intent);
+
     }
 
 }
