@@ -45,7 +45,7 @@
 
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/sample2"
+                android:src="@drawable/img_sample"
                 android:padding="3dp" />
 
 
@@ -109,7 +109,7 @@
         android:layout_height="3dp" />
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:elevation="4dp"
+        android:elevation="2dp"
         android:layout_height="wrap_content">
         <LinearLayout
 
@@ -195,21 +195,29 @@
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
     <FrameLayout
         android:descendantFocusability="blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/frame">
+        android:id="@+id/frame"
+        >
     <android.support.v7.widget.RecyclerView
+
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:background="#80e9d4"
+        android:backgroundTint="#80e9d4"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
     </android.support.v7.widget.RecyclerView>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#36b5a6"
             android:id="@+id/recycleranswers"
+            android:backgroundTint="#36b5a6"
             android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
         </android.support.v7.widget.RecyclerView>

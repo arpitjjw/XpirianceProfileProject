@@ -6,15 +6,17 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/shape2"
         android:elevation="2dp"
-        android:layout_margin="4dp">
+        android:layout_margin="1.5dp"
+        >
             <TextView
                 android:padding="7dp"
                 android:textSize="18dp"
-                android:fontFamily="@font/handlee_regular"
+
                 android:textColor="#000000"
-                android:textStyle="bold"
-                android:gravity="center"
+
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="User Questions"
